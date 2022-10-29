@@ -46,3 +46,24 @@ while True:
         break
     continue
 
+<<<<<<< HEAD
+=======
+if diametro_input == diametro:
+    print("Introduzca el largo requerido ")
+else:
+    print("Error")
+
+
+#    while True:
+#    try:
+#        edad = int(input("Escribe tu edad: "))
+#    except ValueError:
+#        print("Debes escribir un número.")
+#        continue
+
+#    if edad < 0:
+#        print("Debes escribir un número positivo.")
+#        continue
+#    else:
+#       break
+>>>>>>> 28bbf799c52440fd7e25f2f26d2d342ef773b641
