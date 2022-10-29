@@ -3,9 +3,9 @@
 from ast import While
 
 
-diametro = "1/4" , "3/16", "1/2", "5/8", "7/8", "3/4", "1"
+diametro = 1/4 , 3/16, 1/2, 5/8, 7/8, 3/4, 1
 
-largo = "1/4", "3/16", "1/2", "3/4", "1"
+largo = 1/4, 3/16, 1/2, 3/4, 1
 
 terminacion = "negro", "zincado"
 
