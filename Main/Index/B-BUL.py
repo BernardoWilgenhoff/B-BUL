@@ -1,11 +1,11 @@
 # Variables
 
 from ast import While
+from operator import concat
 
+diametro = 1, 2, 3, 4, 5
 
-diametro = 1/4 , 3/16, 1/2, 5/8, 7/8, 3/4, 1
-
-largo = 1/4, 3/16, 1/2, 3/4, 1
+largo = 10, 20, 30, 40, 50
 
 terminacion = "negro", "zincado"
 
@@ -19,9 +19,30 @@ cantidad_requerida = input()
 print("Buen día! Gracias por elegirnos")
 print("Seleccione el bulon que desea comprar")
 
-diametro_input = input("Introduzca el diametro requerido  ")
+while True:
+    diametro_input = int(input("Introduzca el diametro requerido: "))
+    if diametro_input != 1:
+        print("Pone 1")
+    else:
+        print("Pusiste 1")
+        break
+    continue
 
-if diametro_input == diametro:
-    print("Introduzca el largo requerido ")
-else:
-    print("Error")
+while True:
+    largo_input = int(input("Introduzca el largo requerido: "))
+    if largo_input != 10:
+        print("Pone 10")
+    else:
+        print("Pusiste 10")
+        break
+    continue
+
+while True:
+    terminacion_input = (input("Introduzca la terminación requerida: "))
+    if terminacion_input != "negro":
+        print("Pone negro")
+    else:
+        print("Pusiste negro")
+        break
+    continue
+
