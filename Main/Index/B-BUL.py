@@ -5,6 +5,9 @@ from cgitb import reset
 from operator import concat
 from tkinter import N, Y
 
+
+
+
 diametro = 1, 2, 3, 4, 5
 
 largo = 10, 20, 30, 40, 50
@@ -51,16 +54,7 @@ def verificacion_parametros():
     print(("Largo:  ") + str(largo_input))
     print("Terminacion:" + str(terminacion_input))
 
-    print("Si el bulón que selecciono es correcto presione y")
-    print("De no ser correcto presione n")
-    paso_1 = input(("Desea continuar "))
 
-
-    if paso_1 == "y":
-        cantidad_requerida()
-    else:
-        return
-            
 
 def cantidad_requerida():
     while True:
@@ -72,10 +66,18 @@ def cantidad_requerida():
             break
             continue
 
+# Mensaje de bienvenida
 print("Buen día! Gracias por elegirnos")
 print("Seleccione el bulon que desea comprar")
 
-verificacion_parametros()
+# Permite al usuario instertar parámetros y verifica que sean correctos
 
+while paso_1 == "n":
+    verificacion_parametros()
 
+    # Verifica que lo ingresado es lo deseado
+    print("Si el bulón que selecciono es correcto presione y")
+    print("De no ser correcto presione n")
+    paso_1 = input(("Desea continuar "))
 
+cantidad_requerida()
