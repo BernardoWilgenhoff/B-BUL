@@ -1,12 +1,13 @@
 # Variables
 
 from ast import While
-from cgitb import reset
+
 from operator import concat
-from tkinter import N, Y
 
-
-
+#Defino forma de importación del excel
+import openpyxl
+from openpyxl import workbook
+#Defino ubicación del archivo
 
 diametro = 1, 2, 3, 4, 5
 

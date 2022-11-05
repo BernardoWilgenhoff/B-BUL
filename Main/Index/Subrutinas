@@ -1,0 +1,26 @@
+diametro = 1, 2, 3, 4, 5
+
+largo = 10, 20, 30, 40, 50
+
+terminacion = "negro", "zincado"
+
+# Verifico diametro
+
+def verificacion_diametro():
+    while True:
+        try:
+            diametro_input = int(input("Introduzca el diametro requerido: "))
+        except ValueError:
+            print("Debe introducir un número")
+            continue
+
+        if diametro == 1:
+            print("El diamtro seleccionado es: " + str(diametro_input))
+            continue
+        else:
+            print("Los diametros disponibles son 1, 2, 3, 4, 5")
+            break
+            continue
+
+print("hola")
+verificacion_diametro()
