@@ -24,11 +24,15 @@ cantidad_requerida = input()
 
 def verificacion_parametros():
     while True:
-        diametro_input = int(input("Introduzca el diametro requerido: "))
-        if diametro_input != 1:
-            print("Pone 1")
+        try:
+            diametro_input = int(input("Introduzca el diametro requerido: "))
+        except ValueError:
+            print("Debes escribir un numero")
+            continue
+        if diametro_input != (1 or 2 or 3 or 4 or 5):
+            print("Ponga un numero válido 1, 2, 3, 4 5")
         else:
-            print("Pusiste 1")
+            print("Pusiste numero válido")
             break
         continue
 
@@ -73,12 +77,14 @@ print("Seleccione el bulon que desea comprar")
 
 # Permite al usuario instertar parámetros y verifica que sean correctos
 
-while paso_1 == "n":
-    verificacion_parametros()
+verificacion_parametros()
 
     # Verifica que lo ingresado es lo deseado
-    print("Si el bulón que selecciono es correcto presione y")
-    print("De no ser correcto presione n")
-    paso_1 = input(("Desea continuar "))
+print("Si el bulón que selecciono es correcto presione y")
+print("De no ser correcto presione n")
+paso_1 = input(("Desea continuar "))
 
-cantidad_requerida()
+if paso_1 == "n":
+    verificacion_parametros
+else:
+    cantidad_requerida()
