@@ -94,6 +94,7 @@ def continuar_comprando ():
     if continuar == 1:
         genero_superdescriptor()
         agregar_al_carrito()
+        verificacion_parametros()
     if continuar == 2:
         genero_superdescriptor()
         verificar_stock()
@@ -105,8 +106,8 @@ def genero_superdescriptor():
         if terminacion_input == "zincado":
             superd_terminacion = 2
         superd = str(diametro_input)+str(largo_input)+str(superd_terminacion)
-        print(superd)
-        print(cantidad_requerida)
+#        print(superd)
+#        print(cantidad_requerida)
 
 def agregar_al_carrito():
     filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
@@ -114,27 +115,43 @@ def agregar_al_carrito():
     hoja_carrito = wb.create_sheet("Carrito")
     hoja_carrito["A1"] = "superdescriptor"
     hoja_carrito["A2"] = superd
-    hoja_carrito["B2"] = "cantidad requerida"
+    hoja_carrito["B1"] = "cantidad"
     hoja_carrito["B2"] = cantidad_requerida
     wb.save(filesheet)
 
 def verificar_stock():
-    print("Ejecuta verificar stock")
+    global fila
+    global stock
     #cargamos el archivo
     filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
     wb = load_workbook(filesheet)
     sheet = wb['stock'] #cargamos la hoja
 
-    #buscamos con el superdescriptor
+    # Busco con el superdescriptor
     for cell in sheet["E"]:
         if cell.value == int(superd):
-            print(sheet[f"D{cell.row}"].value)
+#            print(sheet[f"D{cell.row}"].value)
             stock = int(sheet[f"D{cell.row}"].value)
+            fila = cell.row
+#            print(fila)
             if stock >= cantidad_requerida:
                 print("Gracias por su compra")
+                ajustar_stock()
             else:
                 print("Seleccione nueva cantidad:")
             continue
+
+def ajustar_stock():
+    filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
+    wb = load_workbook(filesheet)
+    # Creo la etiqueta de la celda que voy a modificar: 
+    celda = str("D"+str(fila))
+#    print(celda)
+# Seleccionamos el archivo
+    sheet = wb.active
+    sheet[celda] = stock-cantidad_requerida
+    # Guardamos el archivo con los cambios
+    wb.save(filesheet)
 
 
 
