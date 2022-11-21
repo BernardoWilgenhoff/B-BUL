@@ -1,21 +1,15 @@
 # Variables
-
-from ast import While
-
-from operator import concat
-
 #Defino forma de importación del excel
 import openpyxl
 from openpyxl import workbook
+from openpyxl import load_workbook
+
+
 #Defino ubicación del archivo
 
-diametro = 1, 2, 3, 4, 5
-
-largo = 10, 20, 30, 40, 50
-
-terminacion = "negro", "zincado"
-
-cantidad_requerida = input()
+# los diametros posibles de seleccionar son = 1, 2, 3, 4, 5
+# los largos posibles de seleccionar son = 10, 20, 30, 40, 50
+# las terminaciones posibles son = "negro", "zincado"
 
 # El usuario debe ingresar los atributos del bulon
 # para verificar si el mismo esta disponible
@@ -23,34 +17,41 @@ cantidad_requerida = input()
 #Ingresa los datos y verifica que los mismos son correctos"
 
 def verificacion_parametros():
+    global diametro_input
+    global largo_input
+    global terminacion_input
     while True:
         try:
             diametro_input = int(input("Introduzca el diametro requerido: "))
         except ValueError:
             print("Debes escribir un numero")
             continue
-        if diametro_input != (1 or 2 or 3 or 4 or 5):
-            print("Ponga un numero válido 1, 2, 3, 4 5")
+        if diametro_input > 5 or diametro_input == 0:
+            print("Ponga un numero válido 1, 2, 3, 4, 5")
         else:
             print("Pusiste numero válido")
             break
         continue
 
     while True:
-        largo_input = int(input("Introduzca el largo requerido: "))
-        if largo_input != 10:
-            print("Pone 10")
+        try:
+            largo_input = int(input("Introduzca el largo requerido: "))
+        except ValueError:
+            print("Debes escribir un numero")
+            continue
+        if largo_input > 50:
+            print("Ponga un numero válido 10, 20, 30, 40, 50")
         else:
-            print("Pusiste 10")
+            print("Pusiste numero válido")
             break
             continue
 
     while True:
         terminacion_input = (input("Introduzca la terminación requerida: "))
-        if terminacion_input != "negro":
-            print("Pone negro")
+        if terminacion_input != "negro" and terminacion_input != "zincado":
+            print("Ponga una terminación valida negro o zincado")
         else:
-            print("Pusiste negro")
+            print("Pusiste terminación válida")
             break
         continue
      
@@ -59,32 +60,78 @@ def verificacion_parametros():
     print(("Largo:  ") + str(largo_input))
     print("Terminacion:" + str(terminacion_input))
 
-
-
 def cantidad_requerida():
     while True:
-        cantidad_requerida = int(input("Introduzca la cantidad requerida: "))
+        global cantidad_requerida
+        try:
+            cantidad_requerida = int(input("Introduzca la cantidad requerida: "))
+        except ValueError:
+            print("Debes escribir un numero")
+            continue
         if cantidad_requerida > 0:
-            print("OK")
+            continuar_comprando()
         else:
             print("Debe colocar un numero positivo")
             break
-            continue
+        continue
+
+def continuar_comprando ():
+    print("Desea continuar comprando:")
+    print("1: Seguir comprando")
+    print("2: Ir a pagar")
+    continuar = int(input("¿Que desea hacer? "))
+    if continuar == 1:
+        genero_superdescriptor()
+        agregar_al_carrito()
+    if continuar == 2:
+        genero_superdescriptor()
+        agregar_al_carrito()
+
+def genero_superdescriptor():
+        global superd
+        if terminacion_input == "negro":
+            superd_terminacion = 1 
+        if terminacion_input == "zincado":
+            superd_terminacion = 2
+        superd = str(diametro_input)+str(largo_input)+str(superd_terminacion)
+        print(superd)
+        print(cantidad_requerida)
+        agregar_al_carrito()
+
+def agregar_al_carrito():
+    filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
+    wb = load_workbook(filesheet)
+    hoja_carrito = wb.create_sheet("Carrito")
+    hoja_carrito["A1"] = "superdescriptor"
+    hoja_carrito["A2"] = superd
+    hoja_carrito["B2"] = "cantidad requerida"
+    hoja_carrito["B2"] = cantidad_requerida
+    wb.save(filesheet)
+
+    
+##############################################################################################################################
+#                                                     ATENCION                                                                           #
+#                                                                                                                            #
+#                                       Empieza la ejecución del programa                                                    #
+#                                                                                                                            #
+#                                                                                                                            #
+##############################################################################################################################
 
 # Mensaje de bienvenida
 print("Buen día! Gracias por elegirnos")
 print("Seleccione el bulon que desea comprar")
 
 # Permite al usuario instertar parámetros y verifica que sean correctos
-
-verificacion_parametros()
-
+while True:
+    verificacion_parametros()
     # Verifica que lo ingresado es lo deseado
-print("Si el bulón que selecciono es correcto presione y")
-print("De no ser correcto presione n")
-paso_1 = input(("Desea continuar "))
+    print("Si el bulón que selecciono es correcto presione 1")
+    print("De no ser correcto presione 0")
+    paso_1 = int(input("Desea continuar "))
+    if paso_1 == 0:
+        print("Vuelva a seleccionar el bulón")        
+    else:
+        cantidad_requerida()
+        break
+    continue
 
-if paso_1 == "n":
-    verificacion_parametros
-else:
-    cantidad_requerida()
