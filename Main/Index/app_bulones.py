@@ -4,7 +4,9 @@ import openpyxl
 from openpyxl import workbook
 from openpyxl import load_workbook
 
-
+continuar = 0
+#mem_n1 = ()
+#mem_n2 = ()
 
 #Defino ubicación del archivo
 
@@ -81,23 +83,27 @@ def cantidad_requerida():
             continue
         if cantidad_requerida > 0:
             continuar_comprando()
+            break
+            continue
         else:
             print("Debe colocar un numero positivo")
             break
         continue
 
 def continuar_comprando ():
-    print("Desea continuar comprando:")
-    print("1: Seguir comprando")
-    print("2: Ir a pagar")
-    continuar = int(input("¿Que desea hacer? "))
-    if continuar == 1:
-        genero_superdescriptor()
-        agregar_al_carrito()
-        verificacion_parametros()
-    if continuar == 2:
-        genero_superdescriptor()
-        verificar_stock()
+    while True:
+        print("Desea continuar comprando:")
+        print("1: Seguir comprando")
+        print("2: Ir a pagar")
+        continuar = int(input("¿Que desea hacer? "))
+        if continuar == 1:
+            genero_superdescriptor()
+            agregar_al_carrito()
+        else:
+            genero_superdescriptor()
+            verificar_stock()
+            break
+        continue
 
 def genero_superdescriptor():
         global superd
@@ -113,10 +119,19 @@ def agregar_al_carrito():
     filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
     wb = load_workbook(filesheet)
     hoja_carrito = wb.create_sheet("Carrito")
+    cuenta_celdaA = 1
+    cuenta_celdaB = 1
+    while True:
+            cuenta_celdaA += 1
+            cuenta_celdaB += 1
+            break
+            continue
+    mem_n1 = str("A"+str(cuenta_celdaA))
+    mem_n2 = str("B"+str(cuenta_celdaB))
     hoja_carrito["A1"] = "superdescriptor"
-    hoja_carrito["A2"] = superd
+    hoja_carrito[mem_n1] = superd
     hoja_carrito["B1"] = "cantidad"
-    hoja_carrito["B2"] = cantidad_requerida
+    hoja_carrito[mem_n2] = cantidad_requerida
     wb.save(filesheet)
 
 def verificar_stock():
@@ -130,7 +145,7 @@ def verificar_stock():
     # Busco con el superdescriptor
     for cell in sheet["E"]:
         if cell.value == int(superd):
-#            print(sheet[f"D{cell.row}"].value)
+#           print(sheet[f"D{cell.row}"].value)
             stock = int(sheet[f"D{cell.row}"].value)
             fila = cell.row
 #            print(fila)
@@ -138,6 +153,7 @@ def verificar_stock():
                 print("Gracias por su compra")
                 ajustar_stock()
             else:
+                print("El stock disponible es", stock)
                 print("Seleccione nueva cantidad:")
             continue
 
@@ -153,7 +169,26 @@ def ajustar_stock():
     # Guardamos el archivo con los cambios
     wb.save(filesheet)
 
+#def celda_correlativa():
+    cuenta_celdaA = 1
+    cuenta_celdaB = 1
+    while True:
+        if continuar == 1:
+            cuenta_celdaA += 1
+            cuenta_celdaB += 1
+            break
+            continue
+        mem_n1 = str("A"+str(cuenta_celdaA))
+        mem_n2 = str("B"+str(cuenta_celdaB))
+        print(mem_n1)
+        print(mem_n2)
+        break
+        continue
 
+def seguir_comprando():
+    while True:
+            print("entra en el bucle")
+            verificacion_parametros()
 
 ##############################################################################################################################
 #                                                     ATENCION                                                                           #
@@ -170,4 +205,9 @@ print("Seleccione el bulon que desea comprar")
 # Permite al usuario instertar parámetros y verifica que sean correctos
 
 verificacion_parametros()
+
+seguir_comprando()
+
+
+
 
