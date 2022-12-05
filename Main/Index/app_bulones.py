@@ -73,8 +73,8 @@ def verificacion_parametros():
         continue
 
 def cantidad_requerida():
+    global cantidad_requerida
     while True:
-        global cantidad_requerida
         try:
             cantidad_requerida = int(input("Introduzca la cantidad requerida: "))
         except ValueError:
@@ -131,7 +131,6 @@ def ajustar_stock():
     wb = load_workbook(filesheet)
     # Creo la etiqueta de la celda que voy a modificar: 
     celda = str("D"+str(fila))
-#    print(celda)
 # Seleccionamos el archivo
     sheet = wb.active
     sheet[celda] = stock-cantidad_requerida
@@ -185,6 +184,7 @@ agregar_al_carrito()
 while True:
     continuar = (input("Desea comprar otro producto?: "))
     if continuar == "si":
+        ajustar_stock()
         verificacion_parametros()
         cantidad_requerida()
         genero_superdescriptor()
