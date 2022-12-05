@@ -5,8 +5,8 @@ from openpyxl import workbook
 from openpyxl import load_workbook
 
 continuar = 0
-#mem_n1 = ()
-#mem_n2 = ()
+
+
 
 #Defino ubicación del archivo
 
@@ -43,12 +43,12 @@ def verificacion_parametros():
             except ValueError:
                 print("Debes escribir un numero")
                 continue
-            if largo_input > 50:
+            if largo_input == 10 and largo_input == 20 and largo_input == 30:
                 print("Ponga un numero válido 10, 20, 30, 40, 50")
             else:
                 print("Pusiste numero válido")
                 break
-                continue
+            continue
 
         while True:
             terminacion_input = (input("Introduzca la terminación requerida: "))
@@ -69,7 +69,6 @@ def verificacion_parametros():
         if paso_1 == 0:
             print("Vuelva a seleccionar el bulón")        
         else:
-            cantidad_requerida()
             break
         continue
 
@@ -80,30 +79,10 @@ def cantidad_requerida():
             cantidad_requerida = int(input("Introduzca la cantidad requerida: "))
         except ValueError:
             print("Debes escribir un numero")
-            continue
-        if cantidad_requerida > 0:
-            continuar_comprando()
-            break
-            continue
         else:
-            print("Debe colocar un numero positivo")
             break
         continue
 
-def continuar_comprando ():
-    while True:
-        print("Desea continuar comprando:")
-        print("1: Seguir comprando")
-        print("2: Ir a pagar")
-        continuar = int(input("¿Que desea hacer? "))
-        if continuar == 1:
-            genero_superdescriptor()
-            agregar_al_carrito()
-        else:
-            genero_superdescriptor()
-            verificar_stock()
-            break
-        continue
 
 def genero_superdescriptor():
         global superd
@@ -112,31 +91,23 @@ def genero_superdescriptor():
         if terminacion_input == "zincado":
             superd_terminacion = 2
         superd = str(diametro_input)+str(largo_input)+str(superd_terminacion)
-#        print(superd)
-#        print(cantidad_requerida)
+
 
 def agregar_al_carrito():
     filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
     wb = load_workbook(filesheet)
-    hoja_carrito = wb.create_sheet("Carrito")
-    cuenta_celdaA = 1
-    cuenta_celdaB = 1
-    while True:
-            cuenta_celdaA += 1
-            cuenta_celdaB += 1
-            break
-            continue
-    mem_n1 = str("A"+str(cuenta_celdaA))
-    mem_n2 = str("B"+str(cuenta_celdaB))
+    hoja_carrito = wb.create_sheet("carrito")
     hoja_carrito["A1"] = "superdescriptor"
-    hoja_carrito[mem_n1] = superd
+    hoja_carrito["A2"] = superd
     hoja_carrito["B1"] = "cantidad"
-    hoja_carrito[mem_n2] = cantidad_requerida
+    hoja_carrito["B2"] = cantidad_requerida
     wb.save(filesheet)
+
 
 def verificar_stock():
     global fila
     global stock
+    global cantidad_requerida
     #cargamos el archivo
     filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
     wb = load_workbook(filesheet)
@@ -145,16 +116,14 @@ def verificar_stock():
     # Busco con el superdescriptor
     for cell in sheet["E"]:
         if cell.value == int(superd):
-#           print(sheet[f"D{cell.row}"].value)
             stock = int(sheet[f"D{cell.row}"].value)
             fila = cell.row
-#            print(fila)
             if stock >= cantidad_requerida:
-                print("Gracias por su compra")
-                ajustar_stock()
+                print("Tenemos esa cantidad")
             else:
                 print("El stock disponible es", stock)
-                print("Seleccione nueva cantidad:")
+                cantidad_requerida = int(input("Seleccione nueva cantidad:"))
+                break
             continue
 
 def ajustar_stock():
@@ -167,6 +136,14 @@ def ajustar_stock():
     sheet = wb.active
     sheet[celda] = stock-cantidad_requerida
     # Guardamos el archivo con los cambios
+    wb.save(filesheet)
+
+def sumar_al_carrito():
+    filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
+    wb = load_workbook(filesheet)
+    item_agregado = wb["carrito"]
+    item_agregado["A3"] = 123
+    item_agregado["B3"] = 123
     wb.save(filesheet)
 
 #def celda_correlativa():
@@ -185,10 +162,6 @@ def ajustar_stock():
         break
         continue
 
-def seguir_comprando():
-    while True:
-            print("entra en el bucle")
-            verificacion_parametros()
 
 ##############################################################################################################################
 #                                                     ATENCION                                                                           #
@@ -205,8 +178,30 @@ print("Seleccione el bulon que desea comprar")
 # Permite al usuario instertar parámetros y verifica que sean correctos
 
 verificacion_parametros()
+cantidad_requerida()
+genero_superdescriptor()
+verificar_stock()
+agregar_al_carrito()
+while True:
+    continuar = (input("Desea comprar otro producto?: "))
+    if continuar == "si":
+        verificacion_parametros()
+        cantidad_requerida()
+        genero_superdescriptor()
+        verificar_stock()
+        sumar_al_carrito()
+    else:
+        ajustar_stock()
+        print("Usted compró un bulón:")
+        print(("Diametro:  ") + str(diametro_input))
+        print(("Largo:  ") + str(largo_input))
+        print(("Terminación:") + terminacion_input)
+        print ("Vuelva pronto")
+        break
+    continue
+            
 
-seguir_comprando()
+
 
 
 
