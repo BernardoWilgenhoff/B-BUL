@@ -39,4 +39,14 @@ def continuar_comprando ():
     #hoja_carrito2[mem_n2] = cantidad_requerida
     #wb.save(filesheet)
 
+def cantidad_requerida():
+    global cantidad_requerida
+    while True:
+        try:
+            cantidad_requerida = int(input("Introduzca la cantidad requerida: "))
+        except ValueError:
+            print("Debes escribir un numero")
+        else:
+            break
+        continue
 

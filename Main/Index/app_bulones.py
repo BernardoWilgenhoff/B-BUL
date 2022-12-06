@@ -5,8 +5,8 @@ from openpyxl import workbook
 from openpyxl import load_workbook
 
 continuar = 0
-
-
+cuenta_celdaA = 2
+cuenta_celdaB = 2
 
 #Defino ubicación del archivo
 
@@ -23,6 +23,7 @@ def verificacion_parametros():
     global diametro_input
     global largo_input
     global terminacion_input
+    global cantidad_requerida
     while True: 
         while True:
             try:
@@ -69,20 +70,17 @@ def verificacion_parametros():
         if paso_1 == 0:
             print("Vuelva a seleccionar el bulón")        
         else:
+            while True:
+                try:
+                    cantidad_requerida = int(input("Introduzca la cantidad requerida: "))
+                except ValueError:
+                    print("Debes escribir un numero")
+                else:
+                    break
+                continue
             break
         continue
-
-def cantidad_requerida():
-    global cantidad_requerida
-    while True:
-        try:
-            cantidad_requerida = int(input("Introduzca la cantidad requerida: "))
-        except ValueError:
-            print("Debes escribir un numero")
-        else:
-            break
-        continue
-
+      
 
 def genero_superdescriptor():
         global superd
@@ -138,28 +136,21 @@ def ajustar_stock():
     wb.save(filesheet)
 
 def sumar_al_carrito():
+    global cuenta_celdaA
+    global cuenta_celdaB
+    global mem_n2
+    global mem_n1
     filesheet = ("C:\Desarrollo\GIT\B-BUL\B-BUL\Main\Index\data_base.xlsx")
     wb = load_workbook(filesheet)
     item_agregado = wb["carrito"]
-    item_agregado["A3"] = 123
-    item_agregado["B3"] = 123
+    cuenta_celdaA += 1
+    cuenta_celdaB += 1
+    mem_n1 = str("A"+str(cuenta_celdaA))
+    mem_n2 = str("B"+str(cuenta_celdaB))
+    item_agregado[f"{mem_n1}"] = superd
+    item_agregado[f"{mem_n2}"] = cantidad_requerida
     wb.save(filesheet)
 
-#def celda_correlativa():
-    cuenta_celdaA = 1
-    cuenta_celdaB = 1
-    while True:
-        if continuar == 1:
-            cuenta_celdaA += 1
-            cuenta_celdaB += 1
-            break
-            continue
-        mem_n1 = str("A"+str(cuenta_celdaA))
-        mem_n2 = str("B"+str(cuenta_celdaB))
-        print(mem_n1)
-        print(mem_n2)
-        break
-        continue
 
 
 ##############################################################################################################################
@@ -177,16 +168,15 @@ print("Seleccione el bulon que desea comprar")
 # Permite al usuario instertar parámetros y verifica que sean correctos
 
 verificacion_parametros()
-cantidad_requerida()
 genero_superdescriptor()
 verificar_stock()
 agregar_al_carrito()
 while True:
+    print("Si desea continuar comprando escriba si, de lo contrario escriba no")
     continuar = (input("Desea comprar otro producto?: "))
     if continuar == "si":
         ajustar_stock()
         verificacion_parametros()
-        cantidad_requerida()
         genero_superdescriptor()
         verificar_stock()
         sumar_al_carrito()
